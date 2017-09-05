@@ -23,7 +23,7 @@ public class ExtratorCaracteristicas {
 		String classePersonagemString;
 		double red, green, blue;
 
-		// Cabe√ßalho do arquivo Weka
+		// CabeÁalho do arquivo Weka
 		String exportacao = "@relation caracteristicas\n\n";
 		exportacao += "@attribute laranja_camisa_bart real\n";
 		exportacao += "@attribute azul_calcao_bart real\n";
@@ -34,18 +34,18 @@ public class ExtratorCaracteristicas {
 		exportacao += "@attribute classe {Bart, Homer}\n\n";
 		exportacao += "@data\n";
 
-		// Diret√≥rio onde est√£o armazenadas as imagens
+		// DiretÛrio onde est„o armazenadas as imagens
 		File diretorio = new File("src\\imagens");
 		File[] arquivos = diretorio.listFiles();
 
-		// Caracter√≠sticas do Homer e Bart
+		// CaracterÌsticas do Homer e Bart
 		float laranjaCamisaBart, azulCalcaoBart, azulSapatoBart;
 		float azulCalcaHomer, marromBocaHomer, cinzaSapatoHomer;
 
-		// Defini√ß√£o do vetor de caracter√≠sticas
+		// DefiniÁ„o do vetor de caracterÌsticas
 		float[][] caracteristicas = new float[293][7];
 
-		// Percorre todas as imagens do diret√≥rio
+		// Percorre todas as imagens do diretÛrio
 		for (int i = 0; i < arquivos.length; i++) {
 			laranjaCamisaBart = 0;
 			azulCalcaoBart = 0;
@@ -54,16 +54,16 @@ public class ExtratorCaracteristicas {
 			marromBocaHomer = 0;
 			cinzaSapatoHomer = 0;
 
-			// Carrega cada imagem do diret√≥rio
+			// Carrega cada imagem do diretÛrio
 			IplImage imagemOriginal = cvLoadImage(diretorio.getAbsolutePath() + "\\" + arquivos[i].getName());
 			CvSize tamanhoImagemOriginal = cvGetSize(imagemOriginal);
 
-			// Imagem processada - tamanho, profundidade de cores e n√∫mero de
+			// Imagem processada - tamanho, profundidade de cores e n˙mero de
 			// canais de cores
 			IplImage imagemProcessada = cvCreateImage(tamanhoImagemOriginal, IPL_DEPTH_8U, 3);
 			imagemProcessada = cvCloneImage(imagemOriginal);
 
-			// Defini√ß√£o da classe - Homer ou Bart
+			// DefiniÁ„o da classe - Homer ou Bart
 			if (arquivos[i].getName().charAt(0) == 'b') {
 				classePersonagem = 0;
 				classePersonagemString = "Bart";
@@ -81,7 +81,7 @@ public class ExtratorCaracteristicas {
 			for (int altura = 0; altura < imagemProcessada.height(); altura++) {
 				for (int largura = 0; largura < imagemProcessada.width(); largura++) {
 
-					// Extra√ß√£o do RGB de cada pixel da imagem
+					// ExtraÁ„o do RGB de cada pixel da imagem
 					CvScalar scalarExtraiRgb = cvGet2D(imagemProcessada, altura, largura);
 					blue = scalarExtraiRgb.val(0);
 					green = scalarExtraiRgb.val(1);
@@ -96,7 +96,7 @@ public class ExtratorCaracteristicas {
 						laranjaCamisaBart++;
 					}
 
-					// Cal√ß√£o azul do Bart (metade de baixo da imagem)
+					// CalÁ„o azul do Bart (metade de baixo da imagem)
 					if (altura > (imagemProcessada.height() / 2)) {
 						if (blue >= 125 && blue <= 170 && green >= 0 && green <= 12 && red >= 0 && red <= 20) {
 							scalarImagemProcessada.setVal(0, 0);
@@ -118,7 +118,7 @@ public class ExtratorCaracteristicas {
 						}
 					}
 
-					// Cal√ßa azul do Homer
+					// CalÁa azul do Homer
 					if (blue >= 150 && blue <= 180 && green >= 98 && green <= 120 && red >= 0 && red <= 90) {
 						scalarImagemProcessada.setVal(0, 0);
 						scalarImagemProcessada.setVal(1, 255);
@@ -151,11 +151,11 @@ public class ExtratorCaracteristicas {
 				}
 			}
 
-			// Imagem processada de acordo com as caracter√≠sticas (altera√ß√£o
+			// Imagem processada de acordo com as caracterÌsticas (alteraÁ„o
 			// das cores)
 			imagemProcessada = new IplImage(mtx);
 
-			// Normaliza as caracter√≠sticas pelo n√∫mero de pixels totais da
+			// Normaliza as caracter√≠sticas pelo n˙mero de pixels totais da
 			// imagem
 			laranjaCamisaBart = (laranjaCamisaBart / (imagemOriginal.height() * imagemOriginal.width())) * 100;
 			azulCalcaoBart = (azulCalcaoBart / (imagemOriginal.height() * imagemOriginal.width())) * 100;
@@ -164,7 +164,7 @@ public class ExtratorCaracteristicas {
 			marromBocaHomer = (marromBocaHomer / (imagemOriginal.height() * imagemOriginal.width())) * 100;
 			cinzaSapatoHomer = (cinzaSapatoHomer / (imagemOriginal.height() * imagemOriginal.width())) * 100;
 
-			// Grava as caracter√≠sticas no vetor de caracter√≠sticas
+			// Grava as caracterÌsticas no vetor de caracterÌsticas
 			caracteristicas[i][0] = laranjaCamisaBart;
 			caracteristicas[i][1] = azulCalcaoBart;
 			caracteristicas[i][2] = azulSapatoBart;
