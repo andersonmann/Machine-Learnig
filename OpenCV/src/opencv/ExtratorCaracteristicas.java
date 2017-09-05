@@ -173,17 +173,17 @@ public class ExtratorCaracteristicas {
 			caracteristicas[i][5] = cinzaSapatoHomer;
 			caracteristicas[i][6] = classePersonagem;
 
-			System.out.println("Laranja camisa Bart: " + caracteristicas[i][0] + " - Azul calÃ§Ã£o Bart: "
-					+ caracteristicas[i][1] + " - Azul sapato Bart: " + caracteristicas[i][2] + " - Azul calÃ§a Homer: "
+			System.out.println("Laranja camisa Bart: " + caracteristicas[i][0] + " - Azul calção Bart: "
+					+ caracteristicas[i][1] + " - Azul sapato Bart: " + caracteristicas[i][2] + " - Azul calça Homer: "
 					+ caracteristicas[i][3] + " - Marrom boca Homer: " + caracteristicas[i][4]
 					+ " - Preto sapato Homer: " + caracteristicas[i][5] + " - Classe: " + caracteristicas[i][6]);
 			exportacao += caracteristicas[i][0] + "," + caracteristicas[i][1] + "," + caracteristicas[i][2] + ","
 					+ caracteristicas[i][3] + "," + caracteristicas[i][4] + "," + caracteristicas[i][5] + ","
 					+ classePersonagemString + "\n";
 
-			// cvShowImage("Imagem original", imagemOriginal);
-			// cvShowImage("Imagem processada", imagemProcessada);
-			// proximaImagem = cvWaitKey();
+			cvShowImage("Imagem original", imagemOriginal);
+			cvShowImage("Imagem processada", imagemProcessada);
+			proximaImagem = cvWaitKey();
 		}
 
 		// Grava o arquivo ARFF no disco
